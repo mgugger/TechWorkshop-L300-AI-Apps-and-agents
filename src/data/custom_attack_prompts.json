@@ -6,6 +6,18 @@
                 {
                     "risk-type": "violence",
                     "risk-subtype": ""
+                },
+                {
+                    "risk-type": "sexual",
+                    "risk-subtype": ""
+                },
+                {
+                    "risk-type": "hate_unfairness",
+                    "risk-subtype": ""
+                },
+                {
+                    "risk-type": "self_harm",
+                    "risk-subtype": ""
                 }
             ]
         },
