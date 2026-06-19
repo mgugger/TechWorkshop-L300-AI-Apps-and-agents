@@ -3,3 +3,11 @@ infra:
   provider: bicep
   path: src/infra
   module: DeployAzureResources
+services:
+  chat-app:
+    project: ./src
+    host: containerapp
+    language: python
+    docker:
+      path: ./Dockerfile
+      context: .

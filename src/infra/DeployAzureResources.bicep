@@ -14,6 +14,24 @@ param userPrincipalId string = deployer().objectId
 })
 param location string = resourceGroup().location
 
+@description('Model version for the gpt-5.4-mini chat completion deployment.')
+param gptModelVersion string = '2026-03-17'
+
+@description('GlobalStandard capacity (thousands of tokens/min) for the gpt-5.4-mini deployment.')
+param gptModelCapacity int = 50
+
+@description('Model version for the text-embedding-3-large deployment.')
+param embeddingModelVersion string = '1'
+
+@description('GlobalStandard capacity (thousands of tokens/min) for the text-embedding-3-large deployment.')
+param embeddingModelCapacity int = 50
+
+@description('Model version for the Phi-4 deployment.')
+param phiModelVersion string = '7'
+
+@description('GlobalStandard capacity for the Phi-4 deployment.')
+param phiModelCapacity int = 1
+
 var cosmosDbName = '${uniqueString(resourceGroup().id)}-cosmosdb'
 var cosmosDbDatabaseName = 'zava'
 var storageAccountName = '${uniqueString(resourceGroup().id)}sa'
@@ -25,6 +43,7 @@ var logAnalyticsName = '${uniqueString(resourceGroup().id)}-cosu-la'
 var appInsightsName = '${uniqueString(resourceGroup().id)}-cosu-ai'
 var registryName = '${uniqueString(resourceGroup().id)}cosureg'
 var registrySku = 'Standard'
+var aiFoundryEndpoint = 'https://${aiFoundryName}.services.ai.azure.com'
 
 var tags = {
   Project: 'Tech Workshop L300 - AI Apps and Agents'
@@ -142,6 +161,66 @@ resource aiProject 'Microsoft.CognitiveServices/accounts/projects@2025-10-01-pre
   tags: tags
 }
 
+// Model deployments on the Microsoft Foundry account.
+// Deployments on a single Cognitive Services account must be created one at a
+// time, so they are chained via dependsOn to avoid concurrent-write conflicts.
+@description('Deploys the gpt-5.4-mini chat completion model.')
+resource gptDeployment 'Microsoft.CognitiveServices/accounts/deployments@2025-10-01-preview' = {
+  parent: aiFoundry
+  name: 'gpt-5.4-mini'
+  sku: {
+    name: 'GlobalStandard'
+    capacity: gptModelCapacity
+  }
+  properties: {
+    model: {
+      format: 'OpenAI'
+      name: 'gpt-5.4-mini'
+      version: gptModelVersion
+    }
+  }
+}
+
+@description('Deploys the text-embedding-3-large embedding model.')
+resource embeddingDeployment 'Microsoft.CognitiveServices/accounts/deployments@2025-10-01-preview' = {
+  parent: aiFoundry
+  name: 'text-embedding-3-large'
+  sku: {
+    name: 'GlobalStandard'
+    capacity: embeddingModelCapacity
+  }
+  properties: {
+    model: {
+      format: 'OpenAI'
+      name: 'text-embedding-3-large'
+      version: embeddingModelVersion
+    }
+  }
+  dependsOn: [
+    gptDeployment
+  ]
+}
+
+@description('Deploys the Phi-4 model (Microsoft model family).')
+resource phiDeployment 'Microsoft.CognitiveServices/accounts/deployments@2025-10-01-preview' = {
+  parent: aiFoundry
+  name: 'Phi-4'
+  sku: {
+    name: 'GlobalStandard'
+    capacity: phiModelCapacity
+  }
+  properties: {
+    model: {
+      format: 'Microsoft'
+      name: 'Phi-4'
+      version: phiModelVersion
+    }
+  }
+  dependsOn: [
+    embeddingDeployment
+  ]
+}
+
 @description('Creates an Azure Log Analytics workspace.')
 resource logAnalyticsWorkspace 'Microsoft.OperationalInsights/workspaces@2023-09-01' = {
   name: logAnalyticsName
@@ -234,7 +313,12 @@ resource containerApp 'Microsoft.App/containerApps@2024-03-01' = {
           value: appInsights.properties.ConnectionString
         }
       ]
-      registries: []
+      registries: [
+        {
+          server: containerRegistry.properties.loginServer
+          identity: 'system'
+        }
+      ]
     }
     template: {
       containers: [
@@ -271,9 +355,13 @@ resource containerApp 'Microsoft.App/containerApps@2024-03-01' = {
             { name: 'cora', value: 'cora' }
             { name: 'cart_manager', value: 'cart-manager' }
             { name: 'handoff_service', value: 'handoff-service' }
-            // NOTE: The following must be set after model deployment via
-            // az containerapp update --set-env-vars:
-            //   FOUNDRY_ENDPOINT, gpt_endpoint, embedding_endpoint, phi_4_endpoint
+            // Model endpoints derived from the Microsoft Foundry account/project.
+            // Deploy the gpt-5.4-mini, text-embedding-3-large, and Phi-4 models in the
+            // Foundry project for calls to these endpoints to return successful responses.
+            { name: 'FOUNDRY_ENDPOINT', value: '${aiFoundryEndpoint}/api/projects/${aiProjectName}' }
+            { name: 'gpt_endpoint', value: aiFoundryEndpoint }
+            { name: 'embedding_endpoint', value: aiFoundryEndpoint }
+            { name: 'phi_4_endpoint', value: '${aiFoundryEndpoint}/models' }
           ]
         }
       ]
@@ -283,7 +371,7 @@ resource containerApp 'Microsoft.App/containerApps@2024-03-01' = {
       }
     }
   }
-  tags: tags
+  tags: union(tags, { 'azd-service-name': 'chat-app' })
 }
 
 // Cosmos DB built-in data plane role IDs
@@ -297,6 +385,7 @@ var cosmosDbBuiltInDataContributorRoleId = '00000000-0000-0000-0000-000000000002
 var cognitiveServicesOpenAIUserRoleId = '5e0bd9bd-7b93-4f28-af87-19fc36ad61bd'
 var cognitiveServicesContributorRoleId = '25fbc0a9-bd7c-42a3-aa1a-3b75d497ee68'
 var azureAIUserRoleId = '53ca6127-db72-4b80-b1b0-d745d6d5456d'
+var azureAIDeveloperRoleId = '64702f94-c441-49e6-a78b-ef80e0188fee'
 
 @description('Assigns Cosmos DB Built-in Data Contributor role to the specified user')
 resource cosmosDbDataContributorRoleAssignment 'Microsoft.DocumentDB/databaseAccounts/sqlRoleAssignments@2023-04-15' = {
@@ -422,9 +511,32 @@ resource containerAppFoundryOpenAIUserRole 'Microsoft.Authorization/roleAssignme
   }
 }
 
+@description('Assigns Azure AI Developer role to the Container App on AI Project (required to invoke prompt agents)')
+resource containerAppProjectAIDeveloperRole 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
+  name: guid(aiProject.id, containerApp.id, azureAIDeveloperRoleId)
+  scope: aiProject
+  properties: {
+    roleDefinitionId: subscriptionResourceId('Microsoft.Authorization/roleDefinitions', azureAIDeveloperRoleId)
+    principalId: containerApp.identity.principalId
+    principalType: 'ServicePrincipal'
+  }
+}
+
+@description('Assigns Azure AI Developer role to the Container App on Microsoft Foundry (required to invoke prompt agents)')
+resource containerAppFoundryAIDeveloperRole 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
+  name: guid(aiFoundry.id, containerApp.id, azureAIDeveloperRoleId)
+  scope: aiFoundry
+  properties: {
+    roleDefinitionId: subscriptionResourceId('Microsoft.Authorization/roleDefinitions', azureAIDeveloperRoleId)
+    principalId: containerApp.identity.principalId
+    principalType: 'ServicePrincipal'
+  }
+}
+
 output cosmosDbEndpoint string = cosmosDbAccount.properties.documentEndpoint
 output storageAccountName string = storageAccount.name
 output container_registry_name string = containerRegistry.name
+output AZURE_CONTAINER_REGISTRY_ENDPOINT string = containerRegistry.properties.loginServer
 output application_name string = containerApp.name
 output application_url string = containerApp.properties.configuration.ingress.fqdn
 

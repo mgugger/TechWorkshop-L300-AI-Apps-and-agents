@@ -1,0 +1,494 @@
+{
+  "predictedResources": [
+    {
+      "id": "/subscriptions/1da3d717-dc11-47ec-86b4-040c260ad30b/resourceGroups/rg-rg-techworkshop/providers/Microsoft.DocumentDB/databaseAccounts/sd4riyhzjq7nm-cosmosdb",
+      "type": "Microsoft.DocumentDB/databaseAccounts",
+      "name": "sd4riyhzjq7nm-cosmosdb",
+      "apiVersion": "2023-04-15",
+      "location": "francecentral",
+      "kind": "GlobalDocumentDB",
+      "identity": {
+        "type": "SystemAssigned"
+      },
+      "tags": {
+        "Project": "Tech Workshop L300 - AI Apps and Agents",
+        "Environment": "Lab",
+        "Owner": "[deployer().userPrincipalName]",
+        "SecurityControl": "ignore",
+        "CostControl": "ignore"
+      },
+      "properties": {
+        "capabilities": [
+          {
+            "name": "EnableNoSQLVectorSearch"
+          }
+        ],
+        "consistencyPolicy": {
+          "defaultConsistencyLevel": "Session"
+        },
+        "databaseAccountOfferType": "Standard",
+        "locations": [
+          {
+            "locationName": "francecentral",
+            "failoverPriority": 0,
+            "isZoneRedundant": false
+          }
+        ],
+        "disableLocalAuth": false
+      }
+    },
+    {
+      "id": "/subscriptions/1da3d717-dc11-47ec-86b4-040c260ad30b/resourceGroups/rg-rg-techworkshop/providers/Microsoft.DocumentDB/databaseAccounts/sd4riyhzjq7nm-cosmosdb/sqlDatabases/zava",
+      "type": "Microsoft.DocumentDB/databaseAccounts/sqlDatabases",
+      "name": "sd4riyhzjq7nm-cosmosdb/zava",
+      "apiVersion": "2023-04-15",
+      "tags": {
+        "Project": "Tech Workshop L300 - AI Apps and Agents",
+        "Environment": "Lab",
+        "Owner": "[deployer().userPrincipalName]",
+        "SecurityControl": "ignore",
+        "CostControl": "ignore"
+      },
+      "properties": {
+        "resource": {
+          "id": "zava"
+        }
+      }
+    },
+    {
+      "id": "/subscriptions/1da3d717-dc11-47ec-86b4-040c260ad30b/resourceGroups/rg-rg-techworkshop/providers/Microsoft.Storage/storageAccounts/sd4riyhzjq7nmsa",
+      "type": "Microsoft.Storage/storageAccounts",
+      "name": "sd4riyhzjq7nmsa",
+      "apiVersion": "2023-01-01",
+      "location": "francecentral",
+      "sku": {
+        "name": "Standard_LRS"
+      },
+      "kind": "StorageV2",
+      "tags": {
+        "Project": "Tech Workshop L300 - AI Apps and Agents",
+        "Environment": "Lab",
+        "Owner": "[deployer().userPrincipalName]",
+        "SecurityControl": "ignore",
+        "CostControl": "ignore"
+      },
+      "properties": {
+        "accessTier": "Hot"
+      }
+    },
+    {
+      "id": "/subscriptions/1da3d717-dc11-47ec-86b4-040c260ad30b/resourceGroups/rg-rg-techworkshop/providers/Microsoft.CognitiveServices/accounts/aif-sd4riyhzjq7nm",
+      "type": "Microsoft.CognitiveServices/accounts",
+      "name": "aif-sd4riyhzjq7nm",
+      "apiVersion": "2025-10-01-preview",
+      "location": "francecentral",
+      "sku": {
+        "name": "S0"
+      },
+      "kind": "AIServices",
+      "identity": {
+        "type": "SystemAssigned"
+      },
+      "tags": {
+        "Project": "Tech Workshop L300 - AI Apps and Agents",
+        "Environment": "Lab",
+        "Owner": "[deployer().userPrincipalName]",
+        "SecurityControl": "ignore",
+        "CostControl": "ignore"
+      },
+      "properties": {
+        "allowProjectManagement": true,
+        "customSubDomainName": "aif-sd4riyhzjq7nm",
+        "disableLocalAuth": false,
+        "publicNetworkAccess": "Enabled"
+      }
+    },
+    {
+      "id": "/subscriptions/1da3d717-dc11-47ec-86b4-040c260ad30b/resourceGroups/rg-rg-techworkshop/providers/Microsoft.CognitiveServices/accounts/aif-sd4riyhzjq7nm/projects/proj-sd4riyhzjq7nm",
+      "type": "Microsoft.CognitiveServices/accounts/projects",
+      "name": "aif-sd4riyhzjq7nm/proj-sd4riyhzjq7nm",
+      "apiVersion": "2025-10-01-preview",
+      "location": "francecentral",
+      "identity": {
+        "type": "SystemAssigned"
+      },
+      "tags": {
+        "Project": "Tech Workshop L300 - AI Apps and Agents",
+        "Environment": "Lab",
+        "Owner": "[deployer().userPrincipalName]",
+        "SecurityControl": "ignore",
+        "CostControl": "ignore"
+      },
+      "properties": {}
+    },
+    {
+      "id": "/subscriptions/1da3d717-dc11-47ec-86b4-040c260ad30b/resourceGroups/rg-rg-techworkshop/providers/Microsoft.OperationalInsights/workspaces/sd4riyhzjq7nm-cosu-la",
+      "type": "Microsoft.OperationalInsights/workspaces",
+      "name": "sd4riyhzjq7nm-cosu-la",
+      "apiVersion": "2023-09-01",
+      "location": "francecentral",
+      "tags": {
+        "Project": "Tech Workshop L300 - AI Apps and Agents",
+        "Environment": "Lab",
+        "Owner": "[deployer().userPrincipalName]",
+        "SecurityControl": "ignore",
+        "CostControl": "ignore"
+      },
+      "properties": {
+        "sku": {
+          "name": "PerGB2018"
+        },
+        "retentionInDays": 90,
+        "workspaceCapping": {
+          "dailyQuotaGb": 1
+        }
+      }
+    },
+    {
+      "id": "/subscriptions/1da3d717-dc11-47ec-86b4-040c260ad30b/resourceGroups/rg-rg-techworkshop/providers/Microsoft.Insights/components/sd4riyhzjq7nm-cosu-ai",
+      "type": "Microsoft.Insights/components",
+      "name": "sd4riyhzjq7nm-cosu-ai",
+      "apiVersion": "2020-02-02-preview",
+      "location": "francecentral",
+      "kind": "web",
+      "tags": {
+        "Project": "Tech Workshop L300 - AI Apps and Agents",
+        "Environment": "Lab",
+        "Owner": "[deployer().userPrincipalName]",
+        "SecurityControl": "ignore",
+        "CostControl": "ignore"
+      },
+      "properties": {
+        "Application_Type": "web",
+        "WorkspaceResourceId": "/subscriptions/1da3d717-dc11-47ec-86b4-040c260ad30b/resourceGroups/rg-rg-techworkshop/providers/Microsoft.OperationalInsights/workspaces/sd4riyhzjq7nm-cosu-la"
+      }
+    },
+    {
+      "id": "/subscriptions/1da3d717-dc11-47ec-86b4-040c260ad30b/resourceGroups/rg-rg-techworkshop/providers/Microsoft.ContainerRegistry/registries/sd4riyhzjq7nmcosureg",
+      "type": "Microsoft.ContainerRegistry/registries",
+      "name": "sd4riyhzjq7nmcosureg",
+      "apiVersion": "2022-12-01",
+      "location": "francecentral",
+      "sku": {
+        "name": "Standard"
+      },
+      "tags": {
+        "Project": "Tech Workshop L300 - AI Apps and Agents",
+        "Environment": "Lab",
+        "Owner": "[deployer().userPrincipalName]",
+        "SecurityControl": "ignore",
+        "CostControl": "ignore"
+      },
+      "properties": {
+        "adminUserEnabled": true
+      }
+    },
+    {
+      "id": "/subscriptions/1da3d717-dc11-47ec-86b4-040c260ad30b/resourceGroups/rg-rg-techworkshop/providers/Microsoft.App/managedEnvironments/sd4riyhzjq7nm-cosu-cae",
+      "type": "Microsoft.App/managedEnvironments",
+      "name": "sd4riyhzjq7nm-cosu-cae",
+      "apiVersion": "2024-03-01",
+      "location": "francecentral",
+      "tags": {
+        "Project": "Tech Workshop L300 - AI Apps and Agents",
+        "Environment": "Lab",
+        "Owner": "[deployer().userPrincipalName]",
+        "SecurityControl": "ignore",
+        "CostControl": "ignore"
+      },
+      "properties": {
+        "appLogsConfiguration": {
+          "destination": "log-analytics",
+          "logAnalyticsConfiguration": {
+            "customerId": "[reference('/subscriptions/1da3d717-dc11-47ec-86b4-040c260ad30b/resourceGroups/rg-rg-techworkshop/providers/Microsoft.OperationalInsights/workspaces/sd4riyhzjq7nm-cosu-la', '2023-09-01').customerId]",
+            "sharedKey": "[listKeys('/subscriptions/1da3d717-dc11-47ec-86b4-040c260ad30b/resourceGroups/rg-rg-techworkshop/providers/Microsoft.OperationalInsights/workspaces/sd4riyhzjq7nm-cosu-la', '2023-09-01').primarySharedKey]"
+          }
+        }
+      }
+    },
+    {
+      "id": "/subscriptions/1da3d717-dc11-47ec-86b4-040c260ad30b/resourceGroups/rg-rg-techworkshop/providers/Microsoft.App/containerApps/app-sd4riyhzjq7nm",
+      "type": "Microsoft.App/containerApps",
+      "name": "app-sd4riyhzjq7nm",
+      "apiVersion": "2024-03-01",
+      "location": "francecentral",
+      "identity": {
+        "type": "SystemAssigned"
+      },
+      "tags": {
+        "Project": "Tech Workshop L300 - AI Apps and Agents",
+        "Environment": "Lab",
+        "Owner": "[deployer().userPrincipalName]",
+        "SecurityControl": "ignore",
+        "CostControl": "ignore"
+      },
+      "properties": {
+        "managedEnvironmentId": "/subscriptions/1da3d717-dc11-47ec-86b4-040c260ad30b/resourceGroups/rg-rg-techworkshop/providers/Microsoft.App/managedEnvironments/sd4riyhzjq7nm-cosu-cae",
+        "configuration": {
+          "ingress": {
+            "external": true,
+            "targetPort": 8000,
+            "transport": "http"
+          },
+          "secrets": [
+            {
+              "name": "applicationinsights-connection-string",
+              "value": "[reference('/subscriptions/1da3d717-dc11-47ec-86b4-040c260ad30b/resourceGroups/rg-rg-techworkshop/providers/Microsoft.Insights/components/sd4riyhzjq7nm-cosu-ai', '2020-02-02-preview').ConnectionString]"
+            }
+          ],
+          "registries": []
+        },
+        "template": {
+          "containers": [
+            {
+              "name": "chat-app",
+              "image": "mcr.microsoft.com/k8se/quickstart:latest",
+              "resources": {
+                "cpu": 1.0,
+                "memory": "2Gi"
+              },
+              "env": [
+                {
+                  "name": "COSMOS_ENDPOINT",
+                  "value": "[reference('/subscriptions/1da3d717-dc11-47ec-86b4-040c260ad30b/resourceGroups/rg-rg-techworkshop/providers/Microsoft.DocumentDB/databaseAccounts/sd4riyhzjq7nm-cosmosdb', '2023-04-15').documentEndpoint]"
+                },
+                {
+                  "name": "storage_account_name",
+                  "value": "sd4riyhzjq7nmsa"
+                },
+                {
+                  "name": "DATABASE_NAME",
+                  "value": "zava"
+                },
+                {
+                  "name": "CONTAINER_NAME",
+                  "value": "product_catalog"
+                },
+                {
+                  "name": "storage_container_name",
+                  "value": "zava"
+                },
+                {
+                  "name": "APPLICATIONINSIGHTS_CONNECTION_STRING",
+                  "secretRef": "applicationinsights-connection-string"
+                },
+                {
+                  "name": "OTEL_INSTRUMENTATION_GENAI_CAPTURE_MESSAGE_CONTENT",
+                  "value": "true"
+                },
+                {
+                  "name": "AZURE_TRACING_GEN_AI_CONTENT_RECORDING_ENABLED",
+                  "value": "true"
+                },
+                {
+                  "name": "FOUNDRY_API_VERSION",
+                  "value": "2025-01-01-preview"
+                },
+                {
+                  "name": "gpt_deployment",
+                  "value": "gpt-5.4-mini"
+                },
+                {
+                  "name": "gpt_api_version",
+                  "value": "2025-01-01-preview"
+                },
+                {
+                  "name": "embedding_deployment",
+                  "value": "text-embedding-3-large"
+                },
+                {
+                  "name": "embedding_api_version",
+                  "value": "2025-01-01-preview"
+                },
+                {
+                  "name": "phi_4_deployment",
+                  "value": "Phi-4"
+                },
+                {
+                  "name": "phi_4_api_version",
+                  "value": "2024-05-01-preview"
+                },
+                {
+                  "name": "customer_loyalty",
+                  "value": "customer-loyalty"
+                },
+                {
+                  "name": "inventory_agent",
+                  "value": "inventory-agent"
+                },
+                {
+                  "name": "interior_designer",
+                  "value": "interior-designer"
+                },
+                {
+                  "name": "cora",
+                  "value": "cora"
+                },
+                {
+                  "name": "cart_manager",
+                  "value": "cart-manager"
+                },
+                {
+                  "name": "handoff_service",
+                  "value": "handoff-service"
+                }
+              ]
+            }
+          ],
+          "scale": {
+            "minReplicas": 0,
+            "maxReplicas": 1
+          }
+        }
+      }
+    },
+    {
+      "id": "/subscriptions/1da3d717-dc11-47ec-86b4-040c260ad30b/resourceGroups/rg-rg-techworkshop/providers/Microsoft.ContainerRegistry/registries/sd4riyhzjq7nmcosureg/providers/Microsoft.Authorization/roleAssignments/bb4e4fc1-3bdc-52e8-b1f2-da87d35590e3",
+      "type": "Microsoft.Authorization/roleAssignments",
+      "name": "bb4e4fc1-3bdc-52e8-b1f2-da87d35590e3",
+      "apiVersion": "2022-04-01",
+      "properties": {
+        "roleDefinitionId": "/subscriptions/1da3d717-dc11-47ec-86b4-040c260ad30b/providers/Microsoft.Authorization/roleDefinitions/7f951dda-4ed3-4680-a7ca-43fe172d538d",
+        "principalId": "[reference('/subscriptions/1da3d717-dc11-47ec-86b4-040c260ad30b/resourceGroups/rg-rg-techworkshop/providers/Microsoft.App/containerApps/app-sd4riyhzjq7nm', '2024-03-01', 'full').identity.principalId]",
+        "principalType": "ServicePrincipal"
+      }
+    },
+    {
+      "id": "[resourceId('1da3d717-dc11-47ec-86b4-040c260ad30b', 'rg-rg-techworkshop', 'Microsoft.DocumentDB/databaseAccounts/sqlRoleAssignments', filter(split(format('{0}/{1}', 'sd4riyhzjq7nm-cosmosdb', guid('/subscriptions/1da3d717-dc11-47ec-86b4-040c260ad30b/resourceGroups/rg-rg-techworkshop/providers/Microsoft.DocumentDB/databaseAccounts/sd4riyhzjq7nm-cosmosdb', deployer().objectId, '00000000-0000-0000-0000-000000000002')), '/'), lambda('x', not(empty(lambdaVariables('x')))))[0], filter(split(format('{0}/{1}', 'sd4riyhzjq7nm-cosmosdb', guid('/subscriptions/1da3d717-dc11-47ec-86b4-040c260ad30b/resourceGroups/rg-rg-techworkshop/providers/Microsoft.DocumentDB/databaseAccounts/sd4riyhzjq7nm-cosmosdb', deployer().objectId, '00000000-0000-0000-0000-000000000002')), '/'), lambda('x', not(empty(lambdaVariables('x')))))[1])]",
+      "type": "Microsoft.DocumentDB/databaseAccounts/sqlRoleAssignments",
+      "name": "[format('{0}/{1}', 'sd4riyhzjq7nm-cosmosdb', guid('/subscriptions/1da3d717-dc11-47ec-86b4-040c260ad30b/resourceGroups/rg-rg-techworkshop/providers/Microsoft.DocumentDB/databaseAccounts/sd4riyhzjq7nm-cosmosdb', deployer().objectId, '00000000-0000-0000-0000-000000000002'))]",
+      "apiVersion": "2023-04-15",
+      "properties": {
+        "roleDefinitionId": "/subscriptions/1da3d717-dc11-47ec-86b4-040c260ad30b/resourceGroups/rg-rg-techworkshop/providers/Microsoft.DocumentDB/databaseAccounts/sd4riyhzjq7nm-cosmosdb/sqlRoleDefinitions/00000000-0000-0000-0000-000000000002",
+        "principalId": "[deployer().objectId]",
+        "scope": "/subscriptions/1da3d717-dc11-47ec-86b4-040c260ad30b/resourceGroups/rg-rg-techworkshop/providers/Microsoft.DocumentDB/databaseAccounts/sd4riyhzjq7nm-cosmosdb"
+      }
+    },
+    {
+      "id": "[extensionResourceId('/subscriptions/1da3d717-dc11-47ec-86b4-040c260ad30b/resourceGroups/rg-rg-techworkshop/providers/Microsoft.CognitiveServices/accounts/aif-sd4riyhzjq7nm/projects/proj-sd4riyhzjq7nm', 'Microsoft.Authorization/roleAssignments', guid('/subscriptions/1da3d717-dc11-47ec-86b4-040c260ad30b/resourceGroups/rg-rg-techworkshop/providers/Microsoft.CognitiveServices/accounts/aif-sd4riyhzjq7nm/projects/proj-sd4riyhzjq7nm', deployer().objectId, '53ca6127-db72-4b80-b1b0-d745d6d5456d'))]",
+      "type": "Microsoft.Authorization/roleAssignments",
+      "name": "[guid('/subscriptions/1da3d717-dc11-47ec-86b4-040c260ad30b/resourceGroups/rg-rg-techworkshop/providers/Microsoft.CognitiveServices/accounts/aif-sd4riyhzjq7nm/projects/proj-sd4riyhzjq7nm', deployer().objectId, '53ca6127-db72-4b80-b1b0-d745d6d5456d')]",
+      "apiVersion": "2022-04-01",
+      "properties": {
+        "roleDefinitionId": "/subscriptions/1da3d717-dc11-47ec-86b4-040c260ad30b/providers/Microsoft.Authorization/roleDefinitions/53ca6127-db72-4b80-b1b0-d745d6d5456d",
+        "principalId": "[deployer().objectId]",
+        "principalType": "User"
+      }
+    },
+    {
+      "id": "[extensionResourceId('/subscriptions/1da3d717-dc11-47ec-86b4-040c260ad30b/resourceGroups/rg-rg-techworkshop/providers/Microsoft.CognitiveServices/accounts/aif-sd4riyhzjq7nm', 'Microsoft.Authorization/roleAssignments', guid('/subscriptions/1da3d717-dc11-47ec-86b4-040c260ad30b/resourceGroups/rg-rg-techworkshop/providers/Microsoft.CognitiveServices/accounts/aif-sd4riyhzjq7nm', deployer().objectId, '53ca6127-db72-4b80-b1b0-d745d6d5456d'))]",
+      "type": "Microsoft.Authorization/roleAssignments",
+      "name": "[guid('/subscriptions/1da3d717-dc11-47ec-86b4-040c260ad30b/resourceGroups/rg-rg-techworkshop/providers/Microsoft.CognitiveServices/accounts/aif-sd4riyhzjq7nm', deployer().objectId, '53ca6127-db72-4b80-b1b0-d745d6d5456d')]",
+      "apiVersion": "2022-04-01",
+      "properties": {
+        "roleDefinitionId": "/subscriptions/1da3d717-dc11-47ec-86b4-040c260ad30b/providers/Microsoft.Authorization/roleDefinitions/53ca6127-db72-4b80-b1b0-d745d6d5456d",
+        "principalId": "[deployer().objectId]",
+        "principalType": "User"
+      }
+    },
+    {
+      "id": "/subscriptions/1da3d717-dc11-47ec-86b4-040c260ad30b/resourceGroups/rg-rg-techworkshop/providers/Microsoft.CognitiveServices/accounts/aif-sd4riyhzjq7nm/projects/proj-sd4riyhzjq7nm/providers/Microsoft.Authorization/roleAssignments/b84957d6-b9fb-546a-a4f0-a385e4894ed3",
+      "type": "Microsoft.Authorization/roleAssignments",
+      "name": "b84957d6-b9fb-546a-a4f0-a385e4894ed3",
+      "apiVersion": "2022-04-01",
+      "properties": {
+        "roleDefinitionId": "/subscriptions/1da3d717-dc11-47ec-86b4-040c260ad30b/providers/Microsoft.Authorization/roleDefinitions/5e0bd9bd-7b93-4f28-af87-19fc36ad61bd",
+        "principalId": "[reference('/subscriptions/1da3d717-dc11-47ec-86b4-040c260ad30b/resourceGroups/rg-rg-techworkshop/providers/Microsoft.DocumentDB/databaseAccounts/sd4riyhzjq7nm-cosmosdb', '2023-04-15', 'full').identity.principalId]",
+        "principalType": "ServicePrincipal"
+      }
+    },
+    {
+      "id": "/subscriptions/1da3d717-dc11-47ec-86b4-040c260ad30b/resourceGroups/rg-rg-techworkshop/providers/Microsoft.CognitiveServices/accounts/aif-sd4riyhzjq7nm/providers/Microsoft.Authorization/roleAssignments/f2eb33bd-721e-5d7e-8383-74e21cda9553",
+      "type": "Microsoft.Authorization/roleAssignments",
+      "name": "f2eb33bd-721e-5d7e-8383-74e21cda9553",
+      "apiVersion": "2022-04-01",
+      "properties": {
+        "roleDefinitionId": "/subscriptions/1da3d717-dc11-47ec-86b4-040c260ad30b/providers/Microsoft.Authorization/roleDefinitions/5e0bd9bd-7b93-4f28-af87-19fc36ad61bd",
+        "principalId": "[reference('/subscriptions/1da3d717-dc11-47ec-86b4-040c260ad30b/resourceGroups/rg-rg-techworkshop/providers/Microsoft.DocumentDB/databaseAccounts/sd4riyhzjq7nm-cosmosdb', '2023-04-15', 'full').identity.principalId]",
+        "principalType": "ServicePrincipal"
+      }
+    },
+    {
+      "id": "/subscriptions/1da3d717-dc11-47ec-86b4-040c260ad30b/resourceGroups/rg-rg-techworkshop/providers/Microsoft.CognitiveServices/accounts/aif-sd4riyhzjq7nm/projects/proj-sd4riyhzjq7nm/providers/Microsoft.Authorization/roleAssignments/4ae7e263-b417-5fb1-9b94-b61cdcb41451",
+      "type": "Microsoft.Authorization/roleAssignments",
+      "name": "4ae7e263-b417-5fb1-9b94-b61cdcb41451",
+      "apiVersion": "2022-04-01",
+      "properties": {
+        "roleDefinitionId": "/subscriptions/1da3d717-dc11-47ec-86b4-040c260ad30b/providers/Microsoft.Authorization/roleDefinitions/25fbc0a9-bd7c-42a3-aa1a-3b75d497ee68",
+        "principalId": "[reference('/subscriptions/1da3d717-dc11-47ec-86b4-040c260ad30b/resourceGroups/rg-rg-techworkshop/providers/Microsoft.DocumentDB/databaseAccounts/sd4riyhzjq7nm-cosmosdb', '2023-04-15', 'full').identity.principalId]",
+        "principalType": "ServicePrincipal"
+      }
+    },
+    {
+      "id": "/subscriptions/1da3d717-dc11-47ec-86b4-040c260ad30b/resourceGroups/rg-rg-techworkshop/providers/Microsoft.CognitiveServices/accounts/aif-sd4riyhzjq7nm/projects/proj-sd4riyhzjq7nm/providers/Microsoft.Authorization/roleAssignments/9b6ba3b3-5cdd-5073-a88d-4520ca6533c4",
+      "type": "Microsoft.Authorization/roleAssignments",
+      "name": "9b6ba3b3-5cdd-5073-a88d-4520ca6533c4",
+      "apiVersion": "2022-04-01",
+      "properties": {
+        "roleDefinitionId": "/subscriptions/1da3d717-dc11-47ec-86b4-040c260ad30b/providers/Microsoft.Authorization/roleDefinitions/53ca6127-db72-4b80-b1b0-d745d6d5456d",
+        "principalId": "[reference('/subscriptions/1da3d717-dc11-47ec-86b4-040c260ad30b/resourceGroups/rg-rg-techworkshop/providers/Microsoft.DocumentDB/databaseAccounts/sd4riyhzjq7nm-cosmosdb', '2023-04-15', 'full').identity.principalId]",
+        "principalType": "ServicePrincipal"
+      }
+    },
+    {
+      "id": "/subscriptions/1da3d717-dc11-47ec-86b4-040c260ad30b/resourceGroups/rg-rg-techworkshop/providers/Microsoft.CognitiveServices/accounts/aif-sd4riyhzjq7nm/providers/Microsoft.Authorization/roleAssignments/239b47c0-886e-5e26-9ad7-4ccfee51b02a",
+      "type": "Microsoft.Authorization/roleAssignments",
+      "name": "239b47c0-886e-5e26-9ad7-4ccfee51b02a",
+      "apiVersion": "2022-04-01",
+      "properties": {
+        "roleDefinitionId": "/subscriptions/1da3d717-dc11-47ec-86b4-040c260ad30b/providers/Microsoft.Authorization/roleDefinitions/53ca6127-db72-4b80-b1b0-d745d6d5456d",
+        "principalId": "[reference('/subscriptions/1da3d717-dc11-47ec-86b4-040c260ad30b/resourceGroups/rg-rg-techworkshop/providers/Microsoft.DocumentDB/databaseAccounts/sd4riyhzjq7nm-cosmosdb', '2023-04-15', 'full').identity.principalId]",
+        "principalType": "ServicePrincipal"
+      }
+    },
+    {
+      "id": "/subscriptions/1da3d717-dc11-47ec-86b4-040c260ad30b/resourceGroups/rg-rg-techworkshop/providers/Microsoft.DocumentDB/databaseAccounts/sd4riyhzjq7nm-cosmosdb/sqlRoleAssignments/a09ed5ab-3ec2-5c87-a7ea-e2e2743fe5e3",
+      "type": "Microsoft.DocumentDB/databaseAccounts/sqlRoleAssignments",
+      "name": "sd4riyhzjq7nm-cosmosdb/a09ed5ab-3ec2-5c87-a7ea-e2e2743fe5e3",
+      "apiVersion": "2023-04-15",
+      "properties": {
+        "roleDefinitionId": "/subscriptions/1da3d717-dc11-47ec-86b4-040c260ad30b/resourceGroups/rg-rg-techworkshop/providers/Microsoft.DocumentDB/databaseAccounts/sd4riyhzjq7nm-cosmosdb/sqlRoleDefinitions/00000000-0000-0000-0000-000000000002",
+        "principalId": "[reference('/subscriptions/1da3d717-dc11-47ec-86b4-040c260ad30b/resourceGroups/rg-rg-techworkshop/providers/Microsoft.App/containerApps/app-sd4riyhzjq7nm', '2024-03-01', 'full').identity.principalId]",
+        "scope": "/subscriptions/1da3d717-dc11-47ec-86b4-040c260ad30b/resourceGroups/rg-rg-techworkshop/providers/Microsoft.DocumentDB/databaseAccounts/sd4riyhzjq7nm-cosmosdb"
+      }
+    },
+    {
+      "id": "/subscriptions/1da3d717-dc11-47ec-86b4-040c260ad30b/resourceGroups/rg-rg-techworkshop/providers/Microsoft.CognitiveServices/accounts/aif-sd4riyhzjq7nm/projects/proj-sd4riyhzjq7nm/providers/Microsoft.Authorization/roleAssignments/de95f93e-15a1-512e-9a3f-0368b81eba63",
+      "type": "Microsoft.Authorization/roleAssignments",
+      "name": "de95f93e-15a1-512e-9a3f-0368b81eba63",
+      "apiVersion": "2022-04-01",
+      "properties": {
+        "roleDefinitionId": "/subscriptions/1da3d717-dc11-47ec-86b4-040c260ad30b/providers/Microsoft.Authorization/roleDefinitions/5e0bd9bd-7b93-4f28-af87-19fc36ad61bd",
+        "principalId": "[reference('/subscriptions/1da3d717-dc11-47ec-86b4-040c260ad30b/resourceGroups/rg-rg-techworkshop/providers/Microsoft.App/containerApps/app-sd4riyhzjq7nm', '2024-03-01', 'full').identity.principalId]",
+        "principalType": "ServicePrincipal"
+      }
+    },
+    {
+      "id": "/subscriptions/1da3d717-dc11-47ec-86b4-040c260ad30b/resourceGroups/rg-rg-techworkshop/providers/Microsoft.CognitiveServices/accounts/aif-sd4riyhzjq7nm/providers/Microsoft.Authorization/roleAssignments/deef1aed-df9d-5da7-896d-efc41f485622",
+      "type": "Microsoft.Authorization/roleAssignments",
+      "name": "deef1aed-df9d-5da7-896d-efc41f485622",
+      "apiVersion": "2022-04-01",
+      "properties": {
+        "roleDefinitionId": "/subscriptions/1da3d717-dc11-47ec-86b4-040c260ad30b/providers/Microsoft.Authorization/roleDefinitions/5e0bd9bd-7b93-4f28-af87-19fc36ad61bd",
+        "principalId": "[reference('/subscriptions/1da3d717-dc11-47ec-86b4-040c260ad30b/resourceGroups/rg-rg-techworkshop/providers/Microsoft.App/containerApps/app-sd4riyhzjq7nm', '2024-03-01', 'full').identity.principalId]",
+        "principalType": "ServicePrincipal"
+      }
+    },
+    {
+      "id": "/subscriptions/1da3d717-dc11-47ec-86b4-040c260ad30b/resourceGroups/rg-rg-techworkshop",
+      "type": "Microsoft.Resources/resourceGroups",
+      "name": "rg-rg-techworkshop",
+      "apiVersion": "2021-04-01",
+      "location": "francecentral",
+      "tags": "[union(coalesce(resourceGroup().tags, createObject()), createObject('Project', 'Tech Workshop L300 - AI Apps and Agents', 'Environment', 'Lab', 'Owner', deployer().userPrincipalName, 'SecurityControl', 'ignore', 'CostControl', 'ignore'))]"
+    }
+  ],
+  "diagnostics": [],
+  "outputs": {
+    "application_url": "[reference('/subscriptions/1da3d717-dc11-47ec-86b4-040c260ad30b/resourceGroups/rg-rg-techworkshop/providers/Microsoft.App/containerApps/app-sd4riyhzjq7nm', '2024-03-01').configuration.ingress.fqdn]",
+    "storageAccountName": "sd4riyhzjq7nmsa",
+    "container_registry_name": "sd4riyhzjq7nmcosureg",
+    "application_name": "app-sd4riyhzjq7nm",
+    "cosmosDbEndpoint": "[reference('/subscriptions/1da3d717-dc11-47ec-86b4-040c260ad30b/resourceGroups/rg-rg-techworkshop/providers/Microsoft.DocumentDB/databaseAccounts/sd4riyhzjq7nm-cosmosdb', '2023-04-15').documentEndpoint]"
+  }
+}

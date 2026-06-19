@@ -1,0 +1,1 @@
+using 'DeployAzureResources.bicep'
