@@ -108,6 +108,59 @@ resource cosmosDbDatabase 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases@20
   tags: tags
 }
 
+@description('Creates the vector-enabled product catalog container.')
+resource productCatalogContainer 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers@2024-05-15' = {
+  parent: cosmosDbDatabase
+  name: 'product_catalog'
+  properties: {
+    resource: any({
+      id: 'product_catalog'
+      partitionKey: {
+        paths: [
+          '/ProductID'
+        ]
+        kind: 'Hash'
+      }
+      indexingPolicy: {
+        indexingMode: 'consistent'
+        automatic: true
+        includedPaths: [
+          {
+            path: '/*'
+          }
+        ]
+        excludedPaths: [
+          {
+            path: '/"_etag"/?'
+          }
+          {
+            path: '/request_vector/*'
+          }
+        ]
+        vectorIndexes: [
+          {
+            path: '/request_vector'
+            type: 'diskANN'
+          }
+        ]
+      }
+      vectorEmbeddingPolicy: {
+        vectorEmbeddings: [
+          {
+            path: '/request_vector'
+            dataType: 'float32'
+            dimensions: 3072
+            distanceFunction: 'cosine'
+          }
+        ]
+      }
+    })
+    options: {
+      throughput: 400
+    }
+  }
+}
+
 @description('Creates an Azure Storage account.')
 resource storageAccount 'Microsoft.Storage/storageAccounts@2023-01-01' = {
   name: storageAccountName
@@ -511,6 +564,28 @@ resource containerAppFoundryOpenAIUserRole 'Microsoft.Authorization/roleAssignme
   }
 }
 
+@description('Assigns Foundry User role to the Container App on AI Project')
+resource containerAppProjectAIUserRole 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
+  name: guid(aiProject.id, containerApp.id, azureAIUserRoleId)
+  scope: aiProject
+  properties: {
+    roleDefinitionId: subscriptionResourceId('Microsoft.Authorization/roleDefinitions', azureAIUserRoleId)
+    principalId: containerApp.identity.principalId
+    principalType: 'ServicePrincipal'
+  }
+}
+
+@description('Assigns Foundry User role to the Container App on Microsoft Foundry')
+resource containerAppFoundryAIUserRole 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
+  name: guid(aiFoundry.id, containerApp.id, azureAIUserRoleId)
+  scope: aiFoundry
+  properties: {
+    roleDefinitionId: subscriptionResourceId('Microsoft.Authorization/roleDefinitions', azureAIUserRoleId)
+    principalId: containerApp.identity.principalId
+    principalType: 'ServicePrincipal'
+  }
+}
+
 @description('Assigns Azure AI Developer role to the Container App on AI Project (required to invoke prompt agents)')
 resource containerAppProjectAIDeveloperRole 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
   name: guid(aiProject.id, containerApp.id, azureAIDeveloperRoleId)
@@ -539,4 +614,17 @@ output container_registry_name string = containerRegistry.name
 output AZURE_CONTAINER_REGISTRY_ENDPOINT string = containerRegistry.properties.loginServer
 output application_name string = containerApp.name
 output application_url string = containerApp.properties.configuration.ingress.fqdn
+output COSMOS_ENDPOINT string = cosmosDbAccount.properties.documentEndpoint
+output DATABASE_NAME string = cosmosDbDatabaseName
+output CONTAINER_NAME string = productCatalogContainer.name
+output FOUNDRY_ENDPOINT string = '${aiFoundryEndpoint}/api/projects/${aiProjectName}'
+output gpt_deployment string = gptDeployment.name
+output embedding_endpoint string = aiFoundryEndpoint
+output embedding_deployment string = embeddingDeployment.name
+output embedding_api_version string = '2025-01-01-preview'
+output APPLICATIONINSIGHTS_CONNECTION_STRING string = appInsights.properties.ConnectionString
+output gpt_endpoint string = aiFoundryEndpoint
+output gpt_api_version string = '2025-01-01-preview'
+output storage_account_name string = storageAccount.name
+output storage_container_name string = 'zava'
 

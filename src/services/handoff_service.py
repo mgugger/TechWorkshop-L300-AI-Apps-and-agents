@@ -11,8 +11,6 @@ from handoff_agent.py, providing:
 
 import logging
 import os
-import random
-import json
 from typing import Any, Dict, Optional, Tuple
 
 from openai import AzureOpenAI
@@ -120,27 +118,14 @@ class HandoffService:
             Dictionary with keys: domain, is_domain_change, confidence, reasoning, agent_id, agent_name
         """
         print("Beginning intent classification...")
-        current_domain = self._session_domains.get(session_id, None)
-        
-        # If no current domain, route to default
-        if not current_domain:
-            logger.info(f"[HANDOFF_SERVICE] First message for session {session_id}, routing to {self.default_domain}")
-            self._session_domains[session_id] = self.default_domain
-            
-            return {
-                "domain": self.default_domain,
-                "is_domain_change": True,
-                "confidence": 1.0,
-                "reasoning": f"First message, routing to {self.default_domain}",
-                "agent_id": self.default_domain,
-                "agent_name": AGENT_DOMAINS[self.default_domain]["name"]
-            }
+        current_domain = self._session_domains.get(session_id, self.default_domain)
         
         # Build classification prompt
-        prompt = f"""
-            Current domain: {current_domain}
-            User message: {user_message}
-        """
+        prompt = f"""Current domain: {current_domain}
+    Conversation history:
+    {chat_history or "(none)"}
+
+    User message: {user_message}"""
         
         try:
             print("Sending classification request to LLM...")
@@ -165,22 +150,26 @@ class HandoffService:
             print("Received classification response.")
             
             # Extract structured result
-            intent = json.loads(response.output_text)
+            intent = IntentClassification.model_validate_json(response.output_text)
+            if intent.domain not in AGENT_DOMAINS:
+                raise ValueError(f"Unknown handoff domain: {intent.domain}")
+
+            is_domain_change = intent.domain != current_domain
             
             result = {
-                "domain": intent["domain"],
-                "is_domain_change": intent["is_domain_change"],
-                "confidence": intent["confidence"],
-                "reasoning": intent["reasoning"],
-                "agent_id": intent["domain"],
-                "agent_name": AGENT_DOMAINS.get(intent["domain"], {}).get("name", "Unknown Agent")
+                "domain": intent.domain,
+                "is_domain_change": is_domain_change,
+                "confidence": intent.confidence,
+                "reasoning": intent.reasoning,
+                "agent_id": intent.domain,
+                "agent_name": AGENT_DOMAINS[intent.domain]["name"]
             }
             print("Updating session domain if changed...")
             
             # Update session domain if changed
-            if intent["is_domain_change"]:
-                self._session_domains[session_id] = intent["domain"]
-                logger.info(f"[HANDOFF_SERVICE] Domain change for session {session_id}: {current_domain} -> {intent['domain']}")
+            self._session_domains[session_id] = intent.domain
+            if is_domain_change:
+                logger.info(f"[HANDOFF_SERVICE] Domain change for session {session_id}: {current_domain} -> {intent.domain}")
             
             logger.info(f"[HANDOFF_SERVICE] Intent classification: {result}")
             return result

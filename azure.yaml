@@ -11,3 +11,7 @@ services:
     docker:
       path: ./Dockerfile
       context: .
+hooks:
+  postprovision:
+    shell: sh
+    run: cd ./src && uv run python scripts/setup_solution.py
